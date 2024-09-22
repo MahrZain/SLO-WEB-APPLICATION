@@ -1,0 +1,89 @@
+{% load static %}
+{% include 'header.html' %}
+
+<!-- Main content -->
+<div class="container d-flex">
+  <div class="wrapper" style="margin-bottom: 0;">
+    {% if download %}
+      {% for img in download %}
+        <img style="width: 100%; top: 80px;" src="{{ img.image.url }}" alt="Download Image">
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="view-view" style="align-self: center;">
+    <!-- Button and loader -->
+    {% if download %}
+      {% for url in download %}
+        <a href="{{ url.url }}" class="btn animated-button small-view" onclick="startDownload()">Download</a>
+      {% endfor %}
+    {% endif %}
+
+    <div id="loader" class="loader"></div>
+
+    <style>
+      .btn {
+        display: inline-block;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 8px;
+      }
+
+      .btn:hover {
+        background-color: rgb(255, 255, 0);
+        color: #4CAF50;
+      }
+
+      .btn:active {
+        background-color: #4CAF50;
+        color: rgb(255, 255, 255);
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+      }
+
+      .animated-button {
+        animation: pulse 2s infinite;
+      }
+
+      .loader {
+        border: 16px solid #fbfafa;
+        border-top: 16px solid rgb(255, 0, 0); /* Red */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        display: none;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+
+    <script>
+      function startDownload() {
+        document.getElementById("loader").style.display = "block";
+        setTimeout(function() {
+          document.getElementById("loader").style.display = "none";
+          alert("Thanks for downloading!");
+        }, 3000); // 3 seconds
+      }
+    </script>
+  </div>
+</div><!-- /.container -->
+
+{% include 'footer.html' %}

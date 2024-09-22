@@ -1,0 +1,30 @@
+{% load static %}
+{% include 'header.html' %}
+
+    <div class="card-wrapper">
+      <div class="container">
+        <h1 class="note mt-5" id="about">About Us</h1>
+        <div class="row mt-4">
+          <div class="col-sm-6 col-lg-4 mb-4">
+            {% if about %}
+            {% for i in about %}
+            <a href="{{i.url}}" class="nav-link">
+              <div class="card" style="align-items: center;">
+                <img class="rounded-circle" style="width: 200px; height: 200px;" src="{{i.image.url}}" class="card-img-top" alt="9th Class|SLO Notes">
+                <div class="card-body">
+                  <h4 class="card-title"style="font-weight:bolder;">{{i.name}}</h4><br>
+                  <p class="card-text mb-4" style="font-size:large;font-family: sans-serif;font-style:unset;font-weight: bold;">{{i.description}}</p>
+                
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+            {% endif %}
+          </div><!-- /.col-lg-3 -->
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+    </div><!-- /.card-wrapper -->
+ 
+{%include 'footer.html'%}
+</body>
+</html>
