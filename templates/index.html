@@ -49,14 +49,13 @@
           {% if card %}
           {% for cards in card %}
           <div class="col-sm-6 col-lg-3 mb-4">
-            
             <a href="{% url 'subject_detail' cards.category.slug %}" class="nav-link">
               <div class="card">
                 <img src="media/{{cards.image}}" class="card-img-top" alt="9th Class|SLO Notes">
                 <div class="card-body">
                   <h4 class="card-title">{{cards.name}}</h4>
                   <p class="card-text mb-4">{{cards.description}}</p>
-                  <a href="{% url 'subject_detail' cards.new_slug %}" class="nav-link"
+                  <a href="{% url 'subject_detail' cards.category.slug %}" class="nav-link"
                     style="background-color: #262b5e; color: white;border-radius: 4px;text-align: center;padding: 8px;">Get
                     Notes</a>
                   
