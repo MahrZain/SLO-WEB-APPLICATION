@@ -14,7 +14,7 @@
       <div class="row">
         {% for subject in subjects %}
         <div class="col-sm-6 col-md-4 mt-4">
-          <a href="{% url 'subject_chapters' subject.id %}">
+          <a href="{% url 'subject_chapters' subject.slug %}">
             <div class="card">
               <img style="height: 200px;" src="{{ subject.image.url }}" class="card-img-top" alt="{{ subject.subject_name }}|SLO Notes">
               <div class="card-body">
