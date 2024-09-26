@@ -21,9 +21,9 @@ def home(request):
         "home": home,
         "category": cat,
         "active_nav": "home",
-
     }
     return render(request, "index.html", data)
+
 
 
 def about(request):
@@ -42,9 +42,9 @@ def download(request):
     return render(request, "app-download.html", {"download": download,"active_nav": "download"})
 
 
-def subject_detail(request, id):
-    # Retrieve the category with the given id
-    category = get_object_or_404(Category, id=id)
+def subject_detail(request, slug):
+    # Fetch the category using the slug
+    category = get_object_or_404(Category, slug=slug)
     
     # Retrieve all subjects that belong to the retrieved category
     subjects = Subjects.objects.filter(category=category)
@@ -56,8 +56,8 @@ def subject_detail(request, id):
     }
     return render(request, "Subjects.html", data)
 
-def subject_chapters(request, id):
-    subject = get_object_or_404(Subjects, id=id)
+def subject_chapters(request, slug):
+    subject = get_object_or_404(Subjects, slug=slug)
     chapters = subject.chapters.all()
     
     context = {
