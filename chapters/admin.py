@@ -1,19 +1,31 @@
+from django import forms
 from django.contrib import admin
-from .models import Chapter, Exercise
+from .models import Chapter
+from subjects.models import Subjects  # Import Subjects model
 
-# Define the inline admin descriptor for Exercise model
-class ExerciseInline(admin.TabularInline):  # or admin.StackedInline for a stacked layout
-    model = Exercise
-    extra = 1  # Number of empty forms to display initially
+class ChapterAdminForm(forms.ModelForm):
+    class Meta:
+        model = Chapter
+        fields = '__all__'
 
-# Register Chapter model with the inline Exercise model
-@admin.register(Chapter)
+    def __init__(self, *args, **kwargs):
+        super(ChapterAdminForm, self).__init__(*args, **kwargs)
+        self.fields['subject'].queryset = Subjects.objects.none()  # Start with an empty queryset
+
+        if 'category' in self.data:
+            try:
+                category_id = int(self.data.get('category'))
+                self.fields['subject'].queryset = Subjects.objects.filter(category_id=category_id).order_by('subject_name')
+            except (ValueError, TypeError):
+                pass  # Invalid input; fallback to empty queryset
+        elif self.instance.pk:
+            self.fields['subject'].queryset = self.instance.category.subjects_set.order_by('subject_name')
+
+
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ('chapter_name', 'subject')
-    inlines = [ExerciseInline]  # Add ExerciseInline here
+    form = ChapterAdminForm
 
-# Register Exercise model separately if needed
-@admin.register(Exercise)
-class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('exercise_title', 'chapter')
-    list_filter = ('chapter',)  # Optional: Adds a filter sidebar for chapters
+    class Media:
+        js = ('js/admin.js',) 
+
+admin.site.register(Chapter, ChapterAdmin)
