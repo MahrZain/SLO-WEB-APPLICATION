@@ -13,7 +13,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('contact/', include('contact.urls'), name='contact'),
     path('download/', views.download, name='download'),
-    path('Subjects/<int:id>/', views.subject_detail, name='subject_detail'),
-    path('Subjects/<int:id>/chapters/', views.subject_chapters, name='subject_chapters'),  
+    path('Subjects/<slug:slug>/', views.subject_detail, name='subject_detail'),
+    path('Subjects/<slug:slug>/chapters/', views.subject_chapters, name='subject_chapters'),  
     path('chapters/', include('chapters.urls')), 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
